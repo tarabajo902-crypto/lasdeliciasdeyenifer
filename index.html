@@ -179,6 +179,36 @@
   }
   section.category:last-of-type{ border-bottom:none; }
 
+  .cat-media{
+    position:relative;
+    width:100%;
+    height: clamp(160px, 32vw, 260px);
+    border-radius: 16px;
+    overflow:hidden;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--line);
+    background: var(--night-2);
+  }
+  .cat-media-bg{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit: cover;
+    filter: blur(22px) brightness(0.55) saturate(1.1);
+    transform: scale(1.2);
+  }
+  .cat-media-fg{
+    position:relative;
+    display:block;
+    width:100%; height:100%;
+    object-fit: contain;
+  }
+  .cat-media::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(23,17,13,0) 55%, rgba(23,17,13,0.88) 100%);
+    z-index:1;
+  }
+
   .cat-head{
     display:flex; align-items:baseline; gap: 0.8rem;
     margin-bottom: 1.6rem;
@@ -361,6 +391,7 @@
 <main>
 
   <section class="category" id="salchipapas">
+    <div class="cat-media"><img class="cat-media-bg" src="salchipapa.jpg" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="salchipapa.jpg" alt="Salchipapa con salsas" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🍟</span><h2>Salchipapas</h2></div>
     <div class="item-grid">
 
@@ -398,6 +429,7 @@
   </section>
 
   <section class="category" id="hamburguesas">
+    <div class="cat-media"><img class="cat-media-bg" src="hamburguesa.avif" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="hamburguesa.avif" alt="Hamburguesa con papas" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🍔</span><h2>Hamburguesas</h2></div>
     <div class="item-grid">
 
@@ -425,6 +457,7 @@
   </section>
 
   <section class="category" id="combos">
+    <div class="cat-media"><img class="cat-media-bg" src="combo.jpg" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="combo.jpg" alt="Combo de hamburguesa con papas" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🍟</span><h2>Combos</h2></div>
     <div class="item-grid">
 
@@ -457,6 +490,7 @@
   </section>
 
   <section class="category" id="hotdogs">
+    <div class="cat-media"><img class="cat-media-bg" src="hotdog.jpg" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="hotdog.jpg" alt="Hot dog" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🌭</span><h2>Hot Dogs</h2></div>
     <div class="item-grid">
 
@@ -489,6 +523,7 @@
   </section>
 
   <section class="category" id="sandwich">
+    <div class="cat-media"><img class="cat-media-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ham_and_cheese_sandwich.jpg" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ham_and_cheese_sandwich.jpg" alt="Sándwich de jamón y queso" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🥪</span><h2>Sándwich</h2></div>
     <div class="item-grid">
 
@@ -516,6 +551,7 @@
   </section>
 
   <section class="category" id="arepas">
+    <div class="cat-media"><img class="cat-media-bg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Arepas_con_chorizo.jpg" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="https://commons.wikimedia.org/wiki/Special:FilePath/Arepas_con_chorizo.jpg" alt="Arepas colombianas" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🫓</span><h2>Arepas</h2><span class="new-tag">NUEVO</span></div>
     <div class="item-grid">
 
@@ -543,6 +579,7 @@
   </section>
 
   <section class="category" id="puntas">
+    <div class="cat-media"><img class="cat-media-bg" src="puntas.jpg" alt="" aria-hidden="true" loading="lazy"><img class="cat-media-fg" src="puntas.jpg" alt="Papas con jamón y queso" loading="lazy"></div>
     <div class="cat-head"><span class="emoji">🧀</span><h2>Puntas</h2></div>
     <div class="item-grid">
 
@@ -564,7 +601,7 @@
     <p class="sub">Escanea el código o usa los datos para transferir tu pago</p>
 
     <div id="qr-box">
-      <img id="qr-img" alt="Código QR de pago Nequi" src="">
+      <img id="qr-img" alt="Código QR de pago Nequi" src="qr.jpeg">
     </div>
 
     <div class="pago-detail">
@@ -576,9 +613,7 @@
         <span>🔑 Llave:</span> <b id="nequi-key-text">—</b>
         <button class="copy-btn" onclick="copyText('nequi-key-text')">Copiar</button>
       </div>
-      <div class="pago-row">
-        <span>🙋 Titular:</span> <b id="nequi-name-text">—</b>
-      </div>
+      
     </div>
   </section>
 
@@ -599,8 +634,8 @@
        así que no necesitas subir ninguna imagen.
   ========================================================= */
   const PAYMENT_CONFIG = {
-    nequiNumber: "300 000 0000",     // <-- reemplaza con tu número real
-    nequiKey: "300 000 0000",        // <-- reemplaza con tu llave real (o deja el número)
+    nequiNumber: "3023556541",     // <-- reemplaza con tu número real
+    nequiKey: "@NEQUIJHE832",        // <-- reemplaza con tu llave real (o deja el número)
     accountHolder: "Jhennyfer"       // <-- nombre del titular
   };
   /* ========================================================= */
