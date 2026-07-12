@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Las Delicias de Jhennyfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night: #17110d;
+    --night-2: #1f1712;
+    --paper: #f3e6c9;
+    --grease: #cbb98a;
+    --gold: #e8a33d;
+    --chili: #d6472b;
+    --herb: #7a9a52;
+    --cream: #f7ecd8;
+    --line: rgba(247,236,216,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--night);
+    color: var(--cream);
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, .display{
+    font-family: 'Anton', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  h2, h3{
+    font-family: 'Poppins', sans-serif;
+  }
+  .price{
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* subtle grease-paper texture */
+  body::before{
+    content:"";
+    position: fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(232,163,61,0.05), transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(214,71,43,0.06), transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{color:inherit;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    padding: 3.5rem 1.5rem 2.5rem;
+    text-align:center;
+    background:
+      linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+    border-bottom: 1px solid var(--line);
+    overflow:hidden;
+  }
+  .flame-row{
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 0.9rem;
+    opacity: 0.85;
+  }
+  header.hero h1{
+    font-size: clamp(2.6rem, 8vw, 4.6rem);
+    line-height: 0.95;
+    color: var(--paper);
+    text-shadow: 0 0 18px rgba(232,163,61,0.25);
+  }
+  header.hero h1 span{
+    color: var(--chili);
+    display:block;
+    font-size: 0.42em;
+    margin-top: 0.4rem;
+    -webkit-text-stroke: 1px var(--gold);
+  }
+  .tagline{
+    margin-top: 1rem;
+    color: var(--grease);
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  .hours-bar{
+    margin-top: 2rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.8rem;
+    justify-content:center;
+  }
+  .pill{
+    display:flex;
+    align-items:center;
+    gap: 0.5rem;
+    background: var(--night-2);
+    border: 1px solid var(--line);
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+  }
+  .pill b{ color: var(--gold); font-family:'DM Mono',monospace; }
+  .pill.open{ border-color: var(--herb); }
+  .dot{
+    width:8px; height:8px; border-radius:50%;
+    background: var(--herb);
+    box-shadow: 0 0 8px var(--herb);
+  }
+
+  .call-btns{
+    margin-top: 1.4rem;
+    display:flex; gap:0.9rem; justify-content:center; flex-wrap:wrap;
+  }
+  .contact-group{
+    display:flex; align-items:center; gap:0.5rem;
+    background: var(--night-2);
+    border: 1px solid var(--line);
+    padding: 0.45rem 0.6rem 0.45rem 1rem;
+    border-radius: 999px;
+  }
+  .contact-group .num{
+    font-family:'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--grease);
+  }
+  .contact-group a{
+    text-decoration:none;
+    width: 34px; height:34px;
+    border-radius: 50%;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size: 1rem;
+    transition: transform .15s ease;
+  }
+  .contact-group a.call{ background: var(--chili); color: var(--paper); }
+  .contact-group a.wa{ background: var(--herb); color: var(--night); }
+  .contact-group a svg{ display:block; }
+  .contact-group a:hover{ transform: translateY(-2px); }
+
+  /* ---------- NAV ---------- */
+  nav.catnav{
+    position: sticky; top:0; z-index:10;
+    background: rgba(23,17,13,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    overflow-x:auto;
+    white-space:nowrap;
+    padding: 0.8rem 1rem;
+    display:flex; gap: 0.5rem;
+  }
+  nav.catnav::-webkit-scrollbar{ display:none; }
+  nav.catnav a{
+    text-decoration:none;
+    font-size: 0.85rem;
+    font-weight:600;
+    color: var(--grease);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    flex: 0 0 auto;
+  }
+  nav.catnav a:hover, nav.catnav a:focus-visible{
+    color: var(--gold);
+    border-color: var(--line);
+    outline: none;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  main{ position:relative; z-index:1; max-width: 900px; margin: 0 auto; padding: 1rem 1.2rem 2rem; }
+
+  section.category{
+    padding: 2.6rem 0 1rem;
+    border-bottom: 1px dashed var(--line);
+  }
+  section.category:last-of-type{ border-bottom:none; }
+
+  .cat-head{
+    display:flex; align-items:baseline; gap: 0.8rem;
+    margin-bottom: 1.6rem;
+  }
+  .cat-head .emoji{ font-size: 1.6rem; }
+  .cat-head h2{
+    font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--paper);
+  }
+  .cat-head .new-tag{
+    font-family:'DM Mono',monospace;
+    font-size: 0.65rem;
+    background: var(--herb);
+    color: var(--night);
+    padding: 0.15rem 0.5rem;
+    border-radius: 5px;
+    letter-spacing: 1px;
+  }
+
+  .item-grid{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media(min-width:640px){
+    .item-grid{ grid-template-columns: 1fr 1fr; }
+  }
+
+  .item{
+    background: var(--night-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    position:relative;
+  }
+  .item-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:0.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .item-top h3{
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: var(--paper);
+    line-height:1.3;
+    letter-spacing: 0.2px;
+  }
+  .ticket{
+    flex: 0 0 auto;
+    font-family:'DM Mono',monospace;
+    font-weight:700;
+    font-size: 0.95rem;
+    color: var(--night);
+    background: var(--gold);
+    padding: 0.28rem 0.6rem;
+    border-radius: 6px;
+    white-space:nowrap;
+  }
+  .ingredients{
+    display:flex; flex-wrap:wrap; gap: 0.35rem;
+  }
+  .ingredients span{
+    font-size: 0.72rem;
+    color: var(--grease);
+    background: rgba(247,236,216,0.05);
+    border: 1px solid var(--line);
+    padding: 0.22rem 0.55rem;
+    border-radius: 999px;
+  }
+
+  /* ---------- PAYMENT ---------- */
+  section.pago{
+    margin-top: 2rem;
+    padding: 2.6rem 1.4rem 3rem;
+    background: var(--night-2);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    text-align:center;
+  }
+  section.pago h2{
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  section.pago .sub{
+    color: var(--grease);
+    font-size: 0.9rem;
+    margin-bottom: 1.6rem;
+  }
+  #qr-box{
+    width: 220px; height:220px;
+    margin: 0 auto 1.4rem;
+    background: var(--cream);
+    border-radius: 14px;
+    display:flex; align-items:center; justify-content:center;
+    padding: 10px;
+  }
+  #qr-box img{ width:100%; height:100%; object-fit:contain; }
+
+  .pago-detail{
+    display:inline-flex; flex-direction:column; gap:0.6rem;
+    text-align:left;
+    background: var(--night);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1rem 1.4rem;
+  }
+  .pago-row{
+    display:flex; align-items:center; gap:0.8rem; font-size:0.92rem;
+  }
+  .pago-row b{ color: var(--paper); font-family:'DM Mono',monospace; letter-spacing:0.5px; }
+  .copy-btn{
+    background: var(--chili); color: var(--paper); border:none;
+    font-size: 0.72rem; font-weight:600; padding: 0.3rem 0.6rem;
+    border-radius: 6px; cursor:pointer;
+  }
+  .copy-btn:hover{ filter: brightness(1.1); }
+
+  footer{
+    text-align:center;
+    padding: 2.4rem 1rem 3rem;
+    color: var(--grease);
+    font-size: 0.9rem;
+  }
+  footer .heart{ color: var(--chili); }
+
+  :focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .call-btns a{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="flame-row">🔥 SABOR CALLEJERO DESDE LAS 5 PM 🔥</div>
+  <h1>Las Delicias<span>de Jhennyfer</span></h1>
+  <p class="tagline">¡Ingredientes frescos, sabor que enamora! ❤️</p>
+
+  <div class="hours-bar">
+    <span class="pill open"><span class="dot"></span> Abierto <b>5:00 PM</b> – <b>11:00 PM</b></span>
+  </div>
+
+  <div class="call-btns">
+    <div class="contact-group">
+      <span class="num">302 355 6541</span>
+      <a class="call" href="tel:3023556541" aria-label="Llamar al 302 355 6541">📞</a>
+      <a class="wa" href="https://wa.me/573023556541" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp al 302 355 6541">
+        <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M16.001 3C9.383 3 4 8.383 4 15.001c0 2.19.588 4.24 1.615 6.007L4 29l8.192-1.578A11.94 11.94 0 0 0 16.001 27C22.619 27 28 21.619 28 15.001 28 8.383 22.619 3 16.001 3zm0 21.7c-1.86 0-3.596-.51-5.086-1.396l-.365-.216-4.86.936.947-4.735-.238-.379a9.66 9.66 0 0 1-1.499-5.909c0-5.383 4.377-9.76 9.76-9.76 5.383 0 9.76 4.377 9.76 9.76 0 5.383-4.377 9.699-9.419 9.699zm5.34-7.29c-.293-.146-1.734-.855-2.003-.953-.269-.098-.464-.146-.66.147-.195.293-.756.953-.927 1.148-.171.196-.342.22-.635.073-.293-.147-1.238-.456-2.36-1.456-.872-.778-1.462-1.739-1.633-2.032-.171-.293-.018-.451.129-.597.132-.132.293-.342.44-.513.146-.171.195-.293.293-.489.098-.196.049-.367-.024-.514-.073-.146-.66-1.59-.905-2.177-.238-.573-.481-.495-.66-.504-.171-.008-.367-.01-.562-.01-.196 0-.514.073-.783.367-.269.293-1.027 1.004-1.027 2.448 0 1.444 1.052 2.839 1.198 3.035.146.196 2.07 3.16 5.016 4.43.701.303 1.248.484 1.674.62.703.224 1.343.192 1.849.117.564-.084 1.734-.708 1.978-1.392.244-.684.244-1.27.171-1.392-.073-.122-.269-.196-.562-.342z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="contact-group">
+      <span class="num">310 747 6846</span>
+      <a class="call" href="tel:3107476846" aria-label="Llamar al 310 747 6846">📞</a>
+      <a class="wa" href="https://wa.me/573107476846" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp al 310 747 6846">
+        <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M16.001 3C9.383 3 4 8.383 4 15.001c0 2.19.588 4.24 1.615 6.007L4 29l8.192-1.578A11.94 11.94 0 0 0 16.001 27C22.619 27 28 21.619 28 15.001 28 8.383 22.619 3 16.001 3zm0 21.7c-1.86 0-3.596-.51-5.086-1.396l-.365-.216-4.86.936.947-4.735-.238-.379a9.66 9.66 0 0 1-1.499-5.909c0-5.383 4.377-9.76 9.76-9.76 5.383 0 9.76 4.377 9.76 9.76 0 5.383-4.377 9.699-9.419 9.699zm5.34-7.29c-.293-.146-1.734-.855-2.003-.953-.269-.098-.464-.146-.66.147-.195.293-.756.953-.927 1.148-.171.196-.342.22-.635.073-.293-.147-1.238-.456-2.36-1.456-.872-.778-1.462-1.739-1.633-2.032-.171-.293-.018-.451.129-.597.132-.132.293-.342.44-.513.146-.171.195-.293.293-.489.098-.196.049-.367-.024-.514-.073-.146-.66-1.59-.905-2.177-.238-.573-.481-.495-.66-.504-.171-.008-.367-.01-.562-.01-.196 0-.514.073-.783.367-.269.293-1.027 1.004-1.027 2.448 0 1.444 1.052 2.839 1.198 3.035.146.196 2.07 3.16 5.016 4.43.701.303 1.248.484 1.674.62.703.224 1.343.192 1.849.117.564-.084 1.734-.708 1.978-1.392.244-.684.244-1.27.171-1.392-.073-.122-.269-.196-.562-.342z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<nav class="catnav" aria-label="Categorías del menú">
+  <a href="#salchipapas">🍟 Salchipapas</a>
+  <a href="#hamburguesas">🍔 Hamburguesas</a>
+  <a href="#combos">🍟 Combos</a>
+  <a href="#hotdogs">🌭 Hot Dogs</a>
+  <a href="#sandwich">🥪 Sándwich</a>
+  <a href="#arepas">🫓 Arepas</a>
+  <a href="#puntas">🧀 Puntas</a>
+  <a href="#pago">💸 Pagar</a>
+</nav>
+
+<main>
+
+  <section class="category" id="salchipapas">
+    <div class="cat-head"><span class="emoji">🍟</span><h2>Salchipapas</h2></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Salchipapa Sencilla</h3><span class="ticket">$7.000</span></div>
+        <div class="ingredients"><span>Papa amarilla o francesa</span><span>Salchicha</span><span>Jamón</span><span>Queso</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Salchi Opcional</h3><span class="ticket">$9.000</span></div>
+        <div class="ingredients"><span>Papa amarilla o francesa</span><span>Salchicha</span><span>Carne o pollo</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Chori Papa</h3><span class="ticket">$9.000</span></div>
+        <div class="ingredients"><span>Papa amarilla o francesa</span><span>Salchicha</span><span>Chorizo</span><span>Jamón</span><span>Queso</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Salchi Especial</h3><span class="ticket">$15.000</span></div>
+        <div class="ingredients"><span>Papa amarilla o francesa</span><span>Salchicha</span><span>Jamón</span><span>Queso</span><span>Carne</span><span>Pollo</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Salchi Opción 2</h3><span class="ticket">$15.000</span></div>
+        <div class="ingredients"><span>Papa amarilla o francesa</span><span>Salchicha</span><span>Jamón</span><span>Queso</span><span>Carne o chorizo</span><span>Pollo o chorizo</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Salchi Súper Poderosa</h3><span class="ticket">$24.000</span></div>
+        <div class="ingredients"><span>Papa amarilla o francesa</span><span>Salchicha</span><span>Jamón</span><span>Queso</span><span>Carne</span><span>Pollo</span><span>Chorizo</span><span>Tocineta</span><span>Salsas</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="category" id="hamburguesas">
+    <div class="cat-head"><span class="emoji">🍔</span><h2>Hamburguesas</h2></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Clásica</h3><span class="ticket">$11.000</span></div>
+        <div class="ingredients"><span>Carne</span><span>Piña</span><span>Cebolla</span><span>Tomate</span><span>Jamón</span><span>Queso</span><span>Lechuga</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Pollo</h3><span class="ticket">$14.000</span></div>
+        <div class="ingredients"><span>Carne</span><span>Pollo</span><span>Piña</span><span>Cebolla</span><span>Tomate</span><span>Jamón</span><span>Queso</span><span>Ripio</span><span>Lechuga</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Doble</h3><span class="ticket">$16.000</span></div>
+        <div class="ingredients"><span>Doble carne</span><span>Piña</span><span>Cebolla</span><span>Tomate</span><span>Jamón</span><span>Queso</span><span>Ripio</span><span>Lechuga</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Especial</h3><span class="ticket">$17.000</span></div>
+        <div class="ingredients"><span>Carne</span><span>Pollo</span><span>Tocineta</span><span>Piña</span><span>Cebolla</span><span>Tomate</span><span>Ripio</span><span>Jamón</span><span>Queso</span><span>Lechuga</span><span>Salsas</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="category" id="combos">
+    <div class="cat-head"><span class="emoji">🍟</span><h2>Combos</h2></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Combo 1</h3><span class="ticket">$17.000</span></div>
+        <div class="ingredients"><span>Hamburguesa Clásica</span><span>Papas a la francesa</span><span>Gaseosa 250 ml</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Combo 2</h3><span class="ticket">$20.000</span></div>
+        <div class="ingredients"><span>Hamburguesa Doble</span><span>Papas a la francesa</span><span>Gaseosa 250 ml</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Combo 3</h3><span class="ticket">$22.000</span></div>
+        <div class="ingredients"><span>Hamburguesa Pollo</span><span>Papas a la francesa</span><span>Gaseosa 250 ml</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Combo 4</h3><span class="ticket">$23.000</span></div>
+        <div class="ingredients"><span>Hamburguesa Doble Carne</span><span>Papas a la francesa</span><span>Gaseosa 250 ml</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Combo 5</h3><span class="ticket">$25.000</span></div>
+        <div class="ingredients"><span>Hamburguesa Especial</span><span>Papas a la francesa</span><span>Gaseosa 250 ml</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="category" id="hotdogs">
+    <div class="cat-head"><span class="emoji">🌭</span><h2>Hot Dogs</h2></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Clásico</h3><span class="ticket">$10.000</span></div>
+        <div class="ingredients"><span>Salchicha</span><span>Ripio</span><span>Jamón</span><span>Queso</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Hawaiano</h3><span class="ticket">$11.000</span></div>
+        <div class="ingredients"><span>Salchicha</span><span>Cebolla</span><span>Piña</span><span>Ensalada</span><span>Ripio</span><span>Jamón</span><span>Queso</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Pollo</h3><span class="ticket">$14.000</span></div>
+        <div class="ingredients"><span>Salchicha</span><span>Cebolla</span><span>Pollo</span><span>Ripio</span><span>Jamón</span><span>Queso</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Chorizo</h3><span class="ticket">$16.000</span></div>
+        <div class="ingredients"><span>Chorizo</span><span>Cebolla</span><span>Piña</span><span>Ensalada</span><span>Jamón</span><span>Queso</span><span>Ripio</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Especial</h3><span class="ticket">$18.000</span></div>
+        <div class="ingredients"><span>Salchicha</span><span>Tocineta</span><span>Pollo</span><span>Cebolla caramelizada</span><span>Piña</span><span>Ensalada</span><span>Maíz</span><span>Jamón</span><span>Queso</span><span>Salsas</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="category" id="sandwich">
+    <div class="cat-head"><span class="emoji">🥪</span><h2>Sándwich</h2></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Cubano</h3><span class="ticket">$9.000</span></div>
+        <div class="ingredients"><span>Jamón</span><span>Queso</span><span>Piña</span><span>Lechuga</span><span>Tomate</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Pollo</h3><span class="ticket">$13.000</span></div>
+        <div class="ingredients"><span>Pollo</span><span>Tomate</span><span>Lechuga</span><span>Piña</span><span>Jamón</span><span>Queso</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Carne</h3><span class="ticket">$14.000</span></div>
+        <div class="ingredients"><span>Carne</span><span>Tomate</span><span>Lechuga</span><span>Piña</span><span>Jamón</span><span>Queso</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Imperio</h3><span class="ticket">$20.000</span></div>
+        <div class="ingredients"><span>Carne desmechada</span><span>Carne de hamburguesa</span><span>Tocineta</span><span>Tomate</span><span>Piña calada</span><span>Queso</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="category" id="arepas">
+    <div class="cat-head"><span class="emoji">🫓</span><h2>Arepas</h2><span class="new-tag">NUEVO</span></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Arepa Pollo</h3><span class="ticket">$7.000</span></div>
+        <div class="ingredients"><span>Jamón</span><span>Queso</span><span>Cebolla caramelizada</span><span>Pollo desmechado</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Arepa Carne</h3><span class="ticket">$7.000</span></div>
+        <div class="ingredients"><span>Jamón</span><span>Queso</span><span>Cebolla caramelizada</span><span>Carne</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Arepa Especial</h3><span class="ticket">$10.000</span></div>
+        <div class="ingredients"><span>Jamón</span><span>Queso</span><span>Cebolla caramelizada</span><span>Pollo</span><span>Carne</span><span>Salsas</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Arepa Súper Poderosa</h3><span class="ticket">$15.000</span></div>
+        <div class="ingredients"><span>Jamón</span><span>Queso</span><span>Cebolla caramelizada</span><span>Pollo</span><span>Carne</span><span>Tocineta</span><span>Maicitos</span><span>Salsas</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="category" id="puntas">
+    <div class="cat-head"><span class="emoji">🧀</span><h2>Puntas</h2></div>
+    <div class="item-grid">
+
+      <article class="item">
+        <div class="item-top"><h3>Hawaiana</h3><span class="ticket">$2.500</span></div>
+        <div class="ingredients"><span>Piña</span><span>Jamón</span><span>Queso</span></div>
+      </article>
+
+      <article class="item">
+        <div class="item-top"><h3>Cubana</h3><span class="ticket">$2.000</span></div>
+        <div class="ingredients"><span>Jamón</span><span>Queso</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="pago" id="pago">
+    <h2>💸 Paga con Nequi</h2>
+    <p class="sub">Escanea el código o usa los datos para transferir tu pago</p>
+
+    <div id="qr-box">
+      <img id="qr-img" alt="Código QR de pago Nequi" src="">
+    </div>
+
+    <div class="pago-detail">
+      <div class="pago-row">
+        <span>📱 Número:</span> <b id="nequi-number-text">—</b>
+        <button class="copy-btn" onclick="copyText('nequi-number-text')">Copiar</button>
+      </div>
+      <div class="pago-row">
+        <span>🔑 Llave:</span> <b id="nequi-key-text">—</b>
+        <button class="copy-btn" onclick="copyText('nequi-key-text')">Copiar</button>
+      </div>
+      <div class="pago-row">
+        <span>🙋 Titular:</span> <b id="nequi-name-text">—</b>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Las Delicias de Jhennyfer &middot; hecho con <span class="heart">❤️</span> y mucha sazón
+</footer>
+
+<script>
+  /* =========================================================
+     CONFIGURACIÓN DE PAGO — EDITA SOLO ESTA SECCIÓN
+     =========================================================
+     - nequiNumber: el número de celular Nequi para recibir pagos
+     - nequiKey: la "llave" Nequi (si tienes una, si no deja igual al número)
+     - accountHolder: nombre del titular de la cuenta
+     - El código QR se genera automáticamente a partir del número,
+       así que no necesitas subir ninguna imagen.
+  ========================================================= */
+  const PAYMENT_CONFIG = {
+    nequiNumber: "300 000 0000",     // <-- reemplaza con tu número real
+    nequiKey: "300 000 0000",        // <-- reemplaza con tu llave real (o deja el número)
+    accountHolder: "Jhennyfer"       // <-- nombre del titular
+  };
+  /* ========================================================= */
+
+  document.getElementById('nequi-number-text').textContent = PAYMENT_CONFIG.nequiNumber;
+  document.getElementById('nequi-key-text').textContent = PAYMENT_CONFIG.nequiKey;
+  document.getElementById('nequi-name-text').textContent = PAYMENT_CONFIG.accountHolder;
+
+  const qrData = encodeURIComponent("Nequi: " + PAYMENT_CONFIG.nequiKey);
+  document.getElementById('qr-img').src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + qrData;
+
+  function copyText(id){
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = event.target;
+      const original = btn.textContent;
+      btn.textContent = "¡Copiado!";
+      setTimeout(() => btn.textContent = original, 1500);
+    });
+  }
+</script>
+
+</body>
+</html>
